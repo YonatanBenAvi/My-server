@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\david\\source\\repos\\MyServer\\MyServer\\MyServer.csproj": {}
+    "C:\\Users\\david\\source\\repos\\YonatanBenAvi\\My Server\\My-server\\MyServer\\MyServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\david\\source\\repos\\MyServer\\MyServer\\MyServer.csproj": {
+    "C:\\Users\\david\\source\\repos\\YonatanBenAvi\\My Server\\My-server\\MyServer\\MyServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\david\\source\\repos\\MyServer\\MyServer\\MyServer.csproj",
+        "projectUniqueName": "C:\\Users\\david\\source\\repos\\YonatanBenAvi\\My Server\\My-server\\MyServer\\MyServer.csproj",
         "projectName": "MyServer",
-        "projectPath": "C:\\Users\\david\\source\\repos\\MyServer\\MyServer\\MyServer.csproj",
+        "projectPath": "C:\\Users\\david\\source\\repos\\YonatanBenAvi\\My Server\\My-server\\MyServer\\MyServer.csproj",
         "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\david\\source\\repos\\MyServer\\MyServer\\obj\\",
+        "outputPath": "C:\\Users\\david\\source\\repos\\YonatanBenAvi\\My Server\\My-server\\MyServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",

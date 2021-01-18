@@ -142,6 +142,7 @@ namespace MyServer
 
         public static int Main(String[] args)
         {
+            //fuck ari stein
             StartListening();
             return 0;
         }
