@@ -93,31 +93,39 @@ namespace MyServer
 
         public static void HandleClients(Socket listener)
         {
-            bool ServerDone = false;
-            while (!ServerDone)
+            bool serverDone = false;
+            while (!serverDone)
             {
                 Console.WriteLine("Waiting for a connection...");
                 // Program is suspended while waiting for an incoming connection.  
                 Socket handler = listener.Accept();
-                HandleSingleClient(handler);
+                serverDone = HandleSingleClient(handler);
             }
+            listener.Shutdown(SocketShutdown.Both);
+            listener.Close();
         }
 
 
-        public static void HandleSingleClient(Socket ClientSocket)
+        public static Boolean HandleSingleClient(Socket ClientSocket)
         {
             bool ClientDone = false;
+            bool serverDone = false;
             while (!ClientDone)
             {
                 Console.WriteLine("Please enter command: ");
                 String newData = Console.ReadLine() + " ";
 
-                String msgLen = newData.Length.ToString();
+                String msgLen = newData.Length.ToString().PadLeft(10, '0');
                 
                 // Echo the data back to the client.  
-                byte[] msg = Encoding.ASCII.GetBytes(newData);
+                byte[] msg = Encoding.ASCII.GetBytes(msgLen + newData);
 
                 ClientSocket.Send(msg);
+
+                String clientResponse = ReciveMessageFromClient(ClientSocket);
+
+                Console.WriteLine(clientResponse);
+
                 if (newData.Equals("done "))
                 {
                     ClientDone = true;
@@ -140,7 +148,26 @@ namespace MyServer
                     File.WriteAllText("C:\\Users\\david\\Desktop\\test\\test2.txt", data);
                 }
             }
+            return serverDone;
+            
         }
+
+        public static String ReciveMessageFromClient(Socket sender)
+        {
+            byte[] size = new byte[10];
+
+            // Receive the response from the remote device.  
+            int sizeLen = sender.Receive(size);
+
+            int rcvSize = Int32.Parse(Encoding.ASCII.GetString(size, 0, sizeLen));
+
+            byte[] bytes = new byte[rcvSize];
+            int bytesRec = sender.Receive(bytes);
+
+            String msg = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+            return msg;
+        }
+
 
 
         public static int Main(String[] args)

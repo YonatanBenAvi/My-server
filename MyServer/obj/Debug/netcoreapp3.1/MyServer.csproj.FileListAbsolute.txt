@@ -22,3 +22,14 @@ C:\Users\david\source\repos\MyServer\MyServer\obj\Debug\netcoreapp3.1\MyServer.A
 C:\Users\david\source\repos\MyServer\MyServer\obj\Debug\netcoreapp3.1\MyServer.AssemblyInfo.cs
 C:\Users\david\source\repos\MyServer\MyServer\obj\Debug\netcoreapp3.1\MyServer.dll
 C:\Users\david\source\repos\MyServer\MyServer\obj\Debug\netcoreapp3.1\MyServer.pdb
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.exe
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.deps.json
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.runtimeconfig.json
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.runtimeconfig.dev.json
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.dll
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.pdb
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.AssemblyInfoInputs.cache
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.AssemblyInfo.cs
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.dll
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.pdb
+C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.csprojAssemblyReference.cache
