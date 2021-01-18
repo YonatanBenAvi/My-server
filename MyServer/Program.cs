@@ -111,9 +111,12 @@ namespace MyServer
             {
                 Console.WriteLine("Please enter command: ");
                 String newData = Console.ReadLine() + " ";
+
+                String msgLen = newData.Length.ToString();
                 
                 // Echo the data back to the client.  
                 byte[] msg = Encoding.ASCII.GetBytes(newData);
+
                 ClientSocket.Send(msg);
                 if (newData.Equals("done "))
                 {
