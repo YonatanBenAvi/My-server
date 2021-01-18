@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ubEgNZF2g9OENJyoEpa6qyWwjNpCUeQUxX+a4PRyVpOGsIWzo1PBK5PaIEHbY5+9a0pCYzd+9Ogyza8Mz0bTuQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\shay\\source\\repos\\MyServer\\MyServer\\MyServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shay\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\shay\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.10\\microsoft.netcore.app.host.win-x64.3.1.10.nupkg.sha512"
+  ],
+  "logs": []
+}
