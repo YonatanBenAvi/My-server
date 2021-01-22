@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.IO;
+using System.Linq;
+
 
 
 namespace MyServer
@@ -12,8 +14,7 @@ namespace MyServer
     public class SynchronousSocketListener
     {
 
-        // Incoming data from the client.  
-        public static string data = null;
+        // Incoming data from the client.
 
         public static void StartListening()
         {
@@ -29,65 +30,26 @@ namespace MyServer
 
             // Create a TCP/IP socket.  
             Socket listener = new Socket(ipAddress.AddressFamily,
-                SocketType.Stream, ProtocolType.Tcp);
+            SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and
             // listen for incoming connections.  
+
+
+            listener.Bind(localEndPoint);
+            listener.Listen(10);
+
+            // Start listening for connections.  
+            HandleClients(listener);
+
+
+            /*
             
-            try
-            {
-                listener.Bind(localEndPoint);
-                listener.Listen(10);
-
-                // Start listening for connections.  
-                HandleClients(listener);
-
-
-                /*
-                while (true)
-                {
-                    Console.WriteLine("Waiting for a connection...");
-                    // Program is suspended while waiting for an incoming connection.  
-                    Socket handler = listener.Accept();
-                    data = null;
-
-                    // An incoming connection needs to be processed.  
-                    while (true)
-                    {
-                        int bytesRec = handler.Receive(bytes);
-                        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                        if (data.IndexOf("<EOF>") > -1)
-                        {
-                            break;
-                        }
-                    }
-
-                    // Show the data on the console.  
-                    Console.WriteLine("Text received : {0}", data);
-
-                    Console.WriteLine("please enter message: \n");
-                    String newData = Console.ReadLine();
-                    
-
-
-
-                    // Echo the data back to the client.  
-                    byte[] msg = Encoding.ASCII.GetBytes(newData);
-
-                    handler.Send(msg);
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
-                }
-                */
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+            */
 
         }
 
@@ -101,53 +63,73 @@ namespace MyServer
                 Socket handler = listener.Accept();
                 serverDone = HandleSingleClient(handler);
             }
-            listener.Shutdown(SocketShutdown.Both);
-            listener.Close();
         }
 
 
-        public static Boolean HandleSingleClient(Socket ClientSocket)
+        public static Boolean HandleSingleClient(Socket clientSocket)
         {
-            bool ClientDone = false;
+            bool clientDone = false;
             bool serverDone = false;
-            while (!ClientDone)
+            while (!clientDone)
             {
                 Console.WriteLine("Please enter command: ");
-                String newData = Console.ReadLine() + " ";
+                String newData = Console.ReadLine();
 
                 String msgLen = newData.Length.ToString().PadLeft(10, '0');
                 
                 // Echo the data back to the client.  
                 byte[] msg = Encoding.ASCII.GetBytes(msgLen + newData);
 
-                ClientSocket.Send(msg);
+                clientSocket.Send(msg);
 
-                String clientResponse = ReciveMessageFromClient(ClientSocket);
-
-                Console.WriteLine(clientResponse);
-
-                if (newData.Equals("done "))
+                String command = newData.Split(' ')[0];
+                if (command.Equals("done"))
                 {
-                    ClientDone = true;
+                    clientDone = true;
+                }else if (command.Equals("quit"))
+                {
+                    clientDone = true;
+                    serverDone = true;
                 }
-                if (newData.Equals("file "))
+                
+                if (command.Equals("send_file"))
                 {
-                    
-                    byte[] bytes = new Byte[1024];
-                    Console.WriteLine("ab");
-                    // An incoming connection needs to be processed.  
-                    while (true)
+                    String filePath = @"C:\Users\shay\Desktop\server\" + newData.Split(' ')[1].Split('\\').Last();
+                    Console.WriteLine(filePath);
+                    // Create a temporary file, and put some data into it.
+                    using (FileStream fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                     {
-                        int bytesRec = ClientSocket.Receive(bytes);
-                        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                        if (data.IndexOf("<EOF>") > -1)
+                        byte[] bytes = new Byte[1024];
+                        byte[] msgLenBytes = new byte[10];
+                        clientSocket.Receive(msgLenBytes);
+                        int sizeToRead = Int32.Parse(Encoding.ASCII.GetString(msgLenBytes));
+
+                        Console.WriteLine("ab");
+                        int bytesRec;
+                        // An incoming connection needs to be processed.  
+                        while (sizeToRead > 0)
                         {
-                            break;
+                            if (sizeToRead > 1024)
+                            {
+                                bytesRec = clientSocket.Receive(bytes);
+                            }
+                            else
+                            {
+                                bytesRec = clientSocket.Receive(bytes, sizeToRead, 0);
+                            }
+                            // Add some information to the file.
+                            fs.Write(bytes, 0, bytesRec);
+                            sizeToRead -= bytesRec;
                         }
                     }
-                    File.WriteAllText("C:\\Users\\david\\Desktop\\test\\test2.txt", data);
                 }
+
+                String clientResponse = ReciveMessageFromClient(clientSocket);
+
+                Console.WriteLine(clientResponse);
             }
+            clientSocket.Shutdown(SocketShutdown.Both);
+            clientSocket.Close();
             return serverDone;
             
         }

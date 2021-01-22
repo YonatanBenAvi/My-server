@@ -33,3 +33,16 @@ C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug
 C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.dll
 C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.pdb
 C:\Users\david\source\repos\YonatanBenAvi\My Server\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.csprojAssemblyReference.cache
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.exe
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.deps.json
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.runtimeconfig.json
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.runtimeconfig.dev.json
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.dll
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\bin\Debug\netcoreapp3.1\MyServer.pdb
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.csprojAssemblyReference.cache
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.AssemblyInfoInputs.cache
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.AssemblyInfo.cs
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.csproj.CoreCompileInputs.cache
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.dll
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.pdb
+C:\Users\shay\Source\Repos\YonatanBenAvi\My-server\MyServer\obj\Debug\netcoreapp3.1\MyServer.genruntimeconfig.cache
