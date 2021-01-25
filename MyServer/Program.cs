@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Collections.Generic;
 
 
 
@@ -55,32 +57,42 @@ namespace MyServer
 
         public static void HandleClients(Socket listener)
         {
+            List<Socket> handlers = new List<Socket>();
             bool serverDone = false;
             while (!serverDone)
             {
                 Console.WriteLine("Waiting for a connection...");
                 // Program is suspended while waiting for an incoming connection.  
                 Socket handler = listener.Accept();
-                serverDone = HandleSingleClient(handler);
+
+                handlers.Add(handler);
+
+                serverDone = HandleSingleClient(handlers);
+                
             }
         }
 
 
-        public static Boolean HandleSingleClient(Socket clientSocket)
+        public static Boolean HandleSingleClient(List<Socket> clientSockets)
         {
+            int clientPosition = 0;
             bool clientDone = false;
             bool serverDone = false;
             while (!clientDone)
             {
                 Console.WriteLine("Please enter command: ");
-                String newData = Console.ReadLine();
+                string newData = Console.ReadLine();
 
-                String msgLen = newData.Length.ToString().PadLeft(10, '0');
+                clientPosition = Int32.Parse(newData.Substring(0, 1));
+
+                newData = newData.Substring(1, newData.Length - 1);
+
+                string msgLen = newData.Length.ToString().PadLeft(10, '0');
                 
                 // Echo the data back to the client.  
                 byte[] msg = Encoding.ASCII.GetBytes(msgLen + newData);
 
-                clientSocket.Send(msg);
+                clientSockets[clientPosition].Send(msg);
 
                 String command = newData.Split(' ')[0];
                 if (command.Equals("done"))
@@ -101,7 +113,7 @@ namespace MyServer
                     {
                         byte[] bytes = new Byte[1024];
                         byte[] msgLenBytes = new byte[10];
-                        clientSocket.Receive(msgLenBytes);
+                        clientSockets[clientPosition].Receive(msgLenBytes);
                         int sizeToRead = Int32.Parse(Encoding.ASCII.GetString(msgLenBytes));
 
                         Console.WriteLine("ab");
@@ -111,11 +123,11 @@ namespace MyServer
                         {
                             if (sizeToRead > 1024)
                             {
-                                bytesRec = clientSocket.Receive(bytes);
+                                bytesRec = clientSockets[clientPosition].Receive(bytes);
                             }
                             else
                             {
-                                bytesRec = clientSocket.Receive(bytes, sizeToRead, 0);
+                                bytesRec = clientSockets[clientPosition].Receive(bytes, sizeToRead, 0);
                             }
                             // Add some information to the file.
                             fs.Write(bytes, 0, bytesRec);
@@ -124,12 +136,12 @@ namespace MyServer
                     }
                 }
 
-                String clientResponse = ReciveMessageFromClient(clientSocket);
+                String clientResponse = ReciveMessageFromClient(clientSockets[clientPosition]);
 
                 Console.WriteLine(clientResponse);
             }
-            clientSocket.Shutdown(SocketShutdown.Both);
-            clientSocket.Close();
+            clientSockets[clientPosition].Shutdown(SocketShutdown.Both);
+            clientSockets[clientPosition].Close();
             return serverDone;
             
         }
