@@ -15,6 +15,8 @@ namespace MyServer
 
     public class SynchronousSocketListener
     {
+        static List<Socket> handlers = new List<Socket>();
+
 
         // Incoming data from the client.
 
@@ -42,8 +44,9 @@ namespace MyServer
             listener.Listen(10);
 
             // Start listening for connections.  
-            HandleClients(listener);
-
+            Thread thread = new Thread(() => HandleClients(listener));
+            thread.Start();
+            HandleSingleClient();
 
             /*
             
@@ -57,23 +60,20 @@ namespace MyServer
 
         public static void HandleClients(Socket listener)
         {
-            List<Socket> handlers = new List<Socket>();
+           
             bool serverDone = false;
             while (!serverDone)
             {
-                Console.WriteLine("Waiting for a connection...");
+                //Console.WriteLine("Waiting for a connection...");
                 // Program is suspended while waiting for an incoming connection.  
                 Socket handler = listener.Accept();
-
                 handlers.Add(handler);
-
-                serverDone = HandleSingleClient(handlers);
-                
+                Console.WriteLine("conection added");
             }
         }
 
 
-        public static Boolean HandleSingleClient(List<Socket> clientSockets)
+        public static Boolean HandleSingleClient()
         {
             int clientPosition = 0;
             bool clientDone = false;
@@ -83,7 +83,7 @@ namespace MyServer
                 Console.WriteLine("Please enter command: ");
                 string newData = Console.ReadLine();
 
-                clientPosition = Int32.Parse(newData.Substring(0, 1));
+                clientPosition = int.Parse(newData.Substring(0, 1));
 
                 newData = newData.Substring(1, newData.Length - 1);
 
@@ -92,12 +92,13 @@ namespace MyServer
                 // Echo the data back to the client.  
                 byte[] msg = Encoding.ASCII.GetBytes(msgLen + newData);
 
-                clientSockets[clientPosition].Send(msg);
+                handlers[clientPosition].Send(msg);
 
                 String command = newData.Split(' ')[0];
                 if (command.Equals("done"))
                 {
-                    clientDone = true;
+                    
+                    //clientDone = true;
                 }else if (command.Equals("quit"))
                 {
                     clientDone = true;
@@ -113,7 +114,7 @@ namespace MyServer
                     {
                         byte[] bytes = new Byte[1024];
                         byte[] msgLenBytes = new byte[10];
-                        clientSockets[clientPosition].Receive(msgLenBytes);
+                        handlers[clientPosition].Receive(msgLenBytes);
                         int sizeToRead = Int32.Parse(Encoding.ASCII.GetString(msgLenBytes));
 
                         Console.WriteLine("ab");
@@ -123,11 +124,11 @@ namespace MyServer
                         {
                             if (sizeToRead > 1024)
                             {
-                                bytesRec = clientSockets[clientPosition].Receive(bytes);
+                                bytesRec = handlers[clientPosition].Receive(bytes);
                             }
                             else
                             {
-                                bytesRec = clientSockets[clientPosition].Receive(bytes, sizeToRead, 0);
+                                bytesRec = handlers[clientPosition].Receive(bytes, sizeToRead, 0);
                             }
                             // Add some information to the file.
                             fs.Write(bytes, 0, bytesRec);
@@ -136,12 +137,12 @@ namespace MyServer
                     }
                 }
 
-                String clientResponse = ReciveMessageFromClient(clientSockets[clientPosition]);
+                String clientResponse = ReciveMessageFromClient(handlers[clientPosition]);
 
                 Console.WriteLine(clientResponse);
             }
-            clientSockets[clientPosition].Shutdown(SocketShutdown.Both);
-            clientSockets[clientPosition].Close();
+            handlers[clientPosition].Shutdown(SocketShutdown.Both);
+            handlers[clientPosition].Close();
             return serverDone;
             
         }
